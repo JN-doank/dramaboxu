@@ -27,12 +27,18 @@ serve(async (req) => {
     }
 
     let apiUrl = `${API_BASE}/${endpoint}`;
+    const classify = url.searchParams.get('classify');
+    const page = url.searchParams.get('page');
     
-    // Add query parameters based on endpoint
-    if (bookId) {
-      apiUrl += `?bookId=${bookId}`;
-    } else if (query) {
-      apiUrl += `?query=${encodeURIComponent(query)}`;
+    // Build query parameters
+    const params = new URLSearchParams();
+    if (bookId) params.append('bookId', bookId);
+    if (query) params.append('query', query);
+    if (classify) params.append('classify', classify);
+    if (page) params.append('page', page);
+    
+    if (params.toString()) {
+      apiUrl += `?${params.toString()}`;
     }
 
     console.log(`Proxying request to: ${apiUrl}`);

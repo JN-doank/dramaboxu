@@ -8,6 +8,7 @@ const navLinks = [
   { path: "/", label: "Beranda" },
   { path: "/terbaru", label: "Terbaru" },
   { path: "/terpopuler", label: "Terpopuler" },
+  { path: "/sulih-suara", label: "Sulih Suara" },
 ];
 
 export function Header() {
@@ -127,12 +128,10 @@ export function Header() {
               {searchResults && searchResults.length > 0 && (
                 <div className="grid gap-3">
                   {searchResults.map((drama, index) => (
-                    <button
+                    <Link
                       key={drama.bookId}
-                      onClick={() => {
-                        handleSearchClose();
-                        // Could navigate to detail page here
-                      }}
+                      to={`/detail/${drama.bookId}`}
+                      onClick={handleSearchClose}
                       className="flex gap-4 p-4 rounded-2xl glass hover:bg-muted/30 transition-all text-left animate-fade-up"
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
@@ -163,7 +162,7 @@ export function Header() {
                           </div>
                         )}
                       </div>
-                    </button>
+                    </Link>
                   ))}
                 </div>
               )}

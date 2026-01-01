@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import Index from "./pages/Index";
 import Latest from "./pages/Latest";
 import Trending from "./pages/Trending";
+import DubbingIndo from "./pages/DubbingIndo";
 import Detail from "./pages/Detail";
 import Watch from "./pages/Watch";
 import NotFound from "./pages/NotFound";
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/terbaru" element={<Latest />} />
           <Route path="/terpopuler" element={<Trending />} />
+          <Route path="/sulih-suara" element={<DubbingIndo />} />
           <Route path="/detail/:bookId" element={<Detail />} />
           <Route path="/watch/:bookId" element={<Watch />} />
           <Route path="*" element={<NotFound />} />
