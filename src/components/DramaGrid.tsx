@@ -30,9 +30,11 @@ export function DramaGrid({ dramas, isLoading, title, subtitle }: DramaGridProps
           ? Array.from({ length: 12 }).map((_, i) => (
               <DramaCardSkeleton key={i} index={i} />
             ))
-          : dramas?.map((drama, index) => (
-              <DramaCard key={drama.bookId} drama={drama} index={index} />
-            ))}
+          : dramas
+              ?.filter((drama) => drama.bookId)
+              .map((drama, index) => (
+                <DramaCard key={drama.bookId} drama={drama} index={index} />
+              ))}
       </div>
 
       {!isLoading && dramas?.length === 0 && (
