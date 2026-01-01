@@ -33,7 +33,22 @@ export default function Watch() {
   };
 
   if (detailLoading || episodesLoading) {
-    return <WatchSkeleton />;
+    return (
+      <main className="min-h-screen pt-24 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center py-32">
+          <div className="relative">
+            <div className="w-20 h-20 rounded-full border-4 border-muted border-t-primary animate-spin" />
+            <div className="absolute inset-0 w-20 h-20 rounded-full border-4 border-transparent border-r-secondary animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+          </div>
+          <h2 className="text-xl font-bold text-foreground mt-8 mb-2 gradient-text">
+            Sedang Memuat Drama
+          </h2>
+          <p className="text-muted-foreground text-center max-w-md">
+            Mohon tunggu sebentar, kami sedang menyiapkan {detailData?.data?.book?.chapterCount || 'semua'} episode untukmu...
+          </p>
+        </div>
+      </main>
+    );
   }
 
   if (!detailData?.data || !episodes) {
