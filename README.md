@@ -1,6 +1,6 @@
 # DramaBox 🎬
 
-Website streaming drama Korea, China, dan Thailand dengan subtitle Indonesia. Dibangun dengan Next.js 16 dan Tailwind CSS.
+Website streaming drama Pendek Gratis.
 
 ## 🚀 Fitur
 
@@ -23,7 +23,7 @@ Website streaming drama Korea, China, dan Thailand dengan subtitle Indonesia. Di
 
 ```bash
 # Clone repository
-git clone <YOUR_GIT_URL>
+git clone https://github.com/Slavecode/dramabox
 cd dramabox
 
 # Install dependencies
