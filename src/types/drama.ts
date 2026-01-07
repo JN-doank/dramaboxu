@@ -106,7 +106,28 @@ export interface RecommendDrama {
   typeTwoNames: string[];
 }
 
-export interface DramaDetailResponse {
+// New direct API response format (flat structure)
+export interface DramaDetailDirect {
+  bookId: string;
+  bookName: string;
+  coverWap: string;
+  chapterCount: number;
+  introduction: string;
+  tags?: string[];
+  tagV3s?: TagV3[];
+  isEntry?: number;
+  index?: number;
+  dataFrom?: string;
+  cardType?: number;
+  markNamesConnectKey?: string;
+  reserveStatus?: number;
+  bookShelfStatus?: number;
+  shelfTime?: string;
+  inLibrary?: boolean;
+}
+
+// Legacy nested response format
+export interface DramaDetailResponseLegacy {
   data: {
     book: BookDetail;
     recommends: RecommendDrama[];
@@ -116,6 +137,9 @@ export interface DramaDetailResponse {
   message: string;
   success: boolean;
 }
+
+// Combined type that handles both formats
+export type DramaDetailResponse = DramaDetailDirect | DramaDetailResponseLegacy;
 
 // Episode Types
 export interface VideoPath {

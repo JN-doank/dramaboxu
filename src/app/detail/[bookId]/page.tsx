@@ -1,11 +1,21 @@
 "use client";
 
 import { useDramaDetail } from "@/hooks/useDramaDetail";
-import { Play, Eye, Heart, Calendar, ChevronLeft, Users } from "lucide-react";
+import { Play, Calendar, ChevronLeft } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
-import Image from "next/image";
+import type { DramaDetailDirect, DramaDetailResponseLegacy } from "@/types/drama";
+
+// Helper to check if response is new format
+function isDirectFormat(data: unknown): data is DramaDetailDirect {
+  return data !== null && typeof data === 'object' && 'bookId' in data && 'coverWap' in data;
+}
+
+// Helper to check if response is legacy format
+function isLegacyFormat(data: unknown): data is DramaDetailResponseLegacy {
+  return data !== null && typeof data === 'object' && 'data' in data && (data as DramaDetailResponseLegacy).data?.book !== undefined;
+}
 
 export default function DetailPage() {
   const params = useParams<{ bookId: string }>();
@@ -17,7 +27,42 @@ export default function DetailPage() {
     return <DetailSkeleton />;
   }
 
-  if (error || !data?.data) {
+  // Handle both new and legacy API formats
+  let book: {
+    bookId: string;
+    bookName: string;
+    cover: string;
+    chapterCount: number;
+    introduction: string;
+    tags?: string[];
+    shelfTime?: string;
+  } | null = null;
+
+  if (isDirectFormat(data)) {
+    // New flat format
+    book = {
+      bookId: data.bookId,
+      bookName: data.bookName,
+      cover: data.coverWap,
+      chapterCount: data.chapterCount,
+      introduction: data.introduction,
+      tags: data.tags || data.tagV3s?.map(t => t.tagName),
+      shelfTime: data.shelfTime,
+    };
+  } else if (isLegacyFormat(data)) {
+    // Legacy nested format
+    book = {
+      bookId: data.data.book.bookId,
+      bookName: data.data.book.bookName,
+      cover: data.data.book.cover,
+      chapterCount: data.data.book.chapterCount,
+      introduction: data.data.book.introduction,
+      tags: data.data.book.tags,
+      shelfTime: data.data.book.shelfTime,
+    };
+  }
+
+  if (error || !book) {
     return (
       <div className="min-h-screen pt-24 px-4">
         <div className="max-w-7xl mx-auto text-center py-20">
@@ -29,14 +74,6 @@ export default function DetailPage() {
       </div>
     );
   }
-
-  const { book } = data.data;
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
-    if (num >= 1000) return (num / 1000).toFixed(1) + "K";
-    return num.toString();
-  };
 
   return (
     <main className="min-h-screen pt-20">
@@ -91,37 +128,28 @@ export default function DetailPage() {
                 {/* Stats */}
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1.5">
-                    <Eye className="w-4 h-4" />
-                    <span>{formatNumber(book.viewCount)} views</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Heart className="w-4 h-4" />
-                    <span>{formatNumber(book.followCount)} followers</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
                     <Play className="w-4 h-4" />
                     <span>{book.chapterCount} Episode</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
-                    <span>{book.shelfTime?.split(" ")[0]}</span>
-                  </div>
+                  {book.shelfTime && (
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4" />
+                      <span>{book.shelfTime?.split(" ")[0]}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {book.tags?.map((tag) => (
-                  <span key={tag} className="tag-pill">
-                    {tag}
-                  </span>
-                ))}
-                {book.typeTwoNames?.map((type) => (
-                  <span key={type} className="tag-pill bg-primary/20 text-primary">
-                    {type}
-                  </span>
-                ))}
-              </div>
+              {book.tags && book.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {book.tags.map((tag) => (
+                    <span key={tag} className="tag-pill">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
 
               {/* Description */}
               <div className="glass rounded-xl p-4">
@@ -130,31 +158,6 @@ export default function DetailPage() {
                   {book.introduction}
                 </p>
               </div>
-
-              {/* Performers */}
-              {book.performerList && book.performerList.length > 0 && (
-                <div>
-                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    Pemeran
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {book.performerList.map((performer) => (
-                      <div
-                        key={performer.performerId}
-                        className="flex items-center gap-2 glass rounded-full pr-4 pl-1 py-1"
-                      >
-                        <img
-                          src={performer.performerAvatar}
-                          alt={performer.performerName}
-                          className="w-8 h-8 rounded-full object-cover"
-                        />
-                        <span className="text-sm font-medium">{performer.performerName}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Watch Button */}
               <Link
