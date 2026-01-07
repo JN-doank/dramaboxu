@@ -12,6 +12,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { DramaDetailDirect, DramaDetailResponseLegacy } from "@/types/drama";
+
+// Helper to check if response is new format
+function isDirectFormat(data: unknown): data is DramaDetailDirect {
+  return data !== null && typeof data === 'object' && 'bookId' in data && 'coverWap' in data;
+}
+
+// Helper to check if response is legacy format
+function isLegacyFormat(data: unknown): data is DramaDetailResponseLegacy {
+  return data !== null && typeof data === 'object' && 'data' in data && (data as DramaDetailResponseLegacy).data?.book !== undefined;
+}
 
 const EPISODES_PER_PAGE = 30;
 
@@ -58,8 +69,7 @@ export default function WatchPage() {
 
   const availableQualities = useMemo(() => {
     const list = defaultCdn?.videoPathList
-      ?.filter((v) => v.isVipEquity === 0)
-      .map((v) => v.quality)
+      ?.map((v) => v.quality)
       .filter((q): q is number => typeof q === "number");
 
     const unique = Array.from(new Set(list && list.length ? list : [720]));
@@ -136,7 +146,16 @@ export default function WatchPage() {
     );
   }
 
-  if (!detailData?.data || !episodes) {
+  // Handle both new and legacy API formats
+  let book: { bookId: string; bookName: string } | null = null;
+
+  if (isDirectFormat(detailData)) {
+    book = { bookId: detailData.bookId, bookName: detailData.bookName };
+  } else if (isLegacyFormat(detailData)) {
+    book = { bookId: detailData.data.book.bookId, bookName: detailData.data.book.bookName };
+  }
+
+  if (!book || !episodes) {
     return (
       <div className="min-h-screen pt-24 px-4">
         <div className="max-w-7xl mx-auto text-center py-20">
@@ -148,8 +167,6 @@ export default function WatchPage() {
       </div>
     );
   }
-
-  const { book } = detailData.data;
 
   return (
     <main className="min-h-screen pt-20 pb-12">
