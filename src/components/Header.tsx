@@ -40,7 +40,7 @@ export function Header() {
               <Play className="w-5 h-5 text-white fill-white" />
             </div>
             <span className="font-display font-bold text-xl gradient-text">
-              Drama xu X Jansen xlite
+              Dramaxu Jansen liteX
             </span>
           </Link>
 
@@ -173,7 +173,7 @@ export function Header() {
 
                 {searchResults && searchResults.length === 0 && normalizedQuery && (
                   <div className="text-center py-12">
-                    <p className="text-muted-foreground">Tidak ada hasil untuk "{normalizedQuery}"</p>
+                    <p className="text-muted-foreground">yah Tidak ada hasil untuk "{normalizedQuery}"</p>
                   </div>
                 )}
 
