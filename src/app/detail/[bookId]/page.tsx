@@ -66,7 +66,7 @@ export default function DetailPage() {
     return (
       <div className="min-h-screen pt-24 px-4">
         <div className="max-w-7xl mx-auto text-center py-20">
-          <h2 className="text-2xl font-bold text-foreground mb-4">Drama tidak ditemukan</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">yah Drama tidak ditemukan🥀</h2>
           <Link href="/" className="text-primary hover:underline">
             Kembali ke beranda
           </Link>
@@ -113,7 +113,7 @@ export default function DetailPage() {
                   className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:scale-105 transition-transform shadow-lg"
                 >
                   <Play className="w-5 h-5 fill-current" />
-                  Tonton Sekarang
+                  cklik Tonton Sekarang
                 </Link>
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function DetailPage() {
                 style={{ background: "var(--gradient-primary)" }}
               >
                 <Play className="w-5 h-5 fill-current" />
-                Mulai Menonton
+               klik Mulai Menonton sekarang 👊
               </Link>
             </div>
           </div>
