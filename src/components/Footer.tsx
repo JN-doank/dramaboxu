@@ -13,11 +13,11 @@ export function Footer() {
                 <Play className="w-5 h-5 text-white fill-white" />
               </div>
               <span className="font-display font-bold text-xl gradient-text">
-                DramaBox
+                Dramaxu Jansen liteX
               </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md">
-              Nonton drama pendek gratis dan tanpa iklan.
+              Nonton drama pendek gratis dan tanpa iklan😎.
             </p>
           </div>
 
