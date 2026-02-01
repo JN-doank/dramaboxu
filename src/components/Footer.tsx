@@ -63,6 +63,17 @@ export function Footer() {
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
+              <li>
+                <a 
+                  href="https://chat.whatsapp.com/KdTdRrGbezhAAxKZ5fBhJ5" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+                >
+                  Gabung grup Sekumpulan orang gabut Di sini 👻
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
               {/* <li>
                 <span className="text-muted-foreground">Kontak</span>
               </li>
@@ -79,7 +90,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-border/50 mt-8 pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Made with ❤️
+            © {new Date().getFullYear()} Made with ❤️ Lovehh😀
           </p>
         </div>
       </div>
