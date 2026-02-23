@@ -13,7 +13,7 @@ export function Footer() {
                 <Play className="w-5 h-5 text-white fill-white" />
               </div>
               <span className="font-display font-bold text-xl gradient-text">
-                Dramaxu Jansen liteX
+                Dramaxu liteX
               </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md">
