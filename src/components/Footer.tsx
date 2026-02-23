@@ -54,12 +54,12 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a 
-                  href="https://lynk.id/sansekai/mxd6j2ezmxoe" 
+                  href="https://chat.whatsapp.com/KdTdRrGbezhAAxKZ5fBhJ5?mode=gi_t" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  Beli Source Code API
+                  group
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
